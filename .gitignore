@@ -1,0 +1,6 @@
+surume-doc/
+surume-playground/
+.idea
+vendor/
+composer.lock
+composer.phar
