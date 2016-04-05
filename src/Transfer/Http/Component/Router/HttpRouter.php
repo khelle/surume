@@ -2,6 +2,7 @@
 
 namespace Surume\Transfer\Http\Component\Router;
 
+use Surume\Transfer\Http\HttpRequestInterface;
 use Surume\Transfer\Http\HttpResponse;
 use Surume\Transfer\IoConnectionInterface;
 use Surume\Transfer\IoMessageInterface;
@@ -120,7 +121,7 @@ class HttpRouter implements HttpRouterInterface
                 [ '_controller' => $component ],
                 [ 'Origin' => '127.0.0.1' ],
                 [],
-                '127.0.0.1'
+                'localhost'
             )
         );
 
@@ -163,6 +164,12 @@ class HttpRouter implements HttpRouterInterface
      */
     public function handleMessage(IoConnectionInterface $conn, IoMessageInterface $message)
     {
+        if (!$message instanceof HttpRequestInterface)
+        {
+            $conn->controller->handleMessage($conn, $message);
+            return;
+        }
+
         if (($header = $message->getHeaderLine('Origin')) !== '')
         {
             $origin = parse_url($header, PHP_URL_HOST) ?: $header;
