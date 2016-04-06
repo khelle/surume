@@ -6,7 +6,7 @@ return [
         'plugins'  => [],
         'channels' => [
             'master' => [
-                'class'  => 'Surume\Channel\Model\Zmq\ZmqDealer',
+                'class'  => 'Surume\Channel\Model\Zmq\ZmqRouter',
                 'config' => [
                     'type'      => 1,
                     'endpoint'  => 'tcp://%host.main%:2060'

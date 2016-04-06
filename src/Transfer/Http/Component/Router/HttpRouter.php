@@ -174,7 +174,7 @@ class HttpRouter implements HttpRouterInterface
         {
             $origin = parse_url($header, PHP_URL_HOST) ?: $header;
 
-            if ($origin !== '' && !$this->isBlocked($origin))
+            if ($origin !== '' && $this->isBlocked($origin))
             {
                 return $this->close($conn, 403);
             }
