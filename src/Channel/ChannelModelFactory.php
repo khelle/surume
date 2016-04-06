@@ -4,6 +4,8 @@ namespace Surume\Channel;
 
 use Surume\Channel\Model\Null\NullModel;
 use Surume\Channel\Model\Zmq\ZmqDealer;
+use Surume\Channel\Model\Zmq\ZmqModel;
+use Surume\Channel\Model\Zmq\ZmqRouter;
 use Surume\Loop\LoopInterface;
 use Surume\Util\Factory\Factory;
 
@@ -30,7 +32,20 @@ class ChannelModelFactory extends Factory implements ChannelModelFactoryInterfac
                     array_merge(
                         [
                             'id'    => isset($config['name']) ? $config['name'] : $factory->getParam('name'),
-                            'type'  => ZmqDealer::BINDER,
+                            'type'  => ZmqModel::BINDER,
+                            'hosts' => isset($config['name']) ? $config['name'] : $factory->getParam('name')
+                        ],
+                        $config
+                    )
+                );
+            })
+            ->define('Surume\Channel\Model\Zmq\ZmqRouter', function($config) use($factory) {
+                return new ZmqRouter(
+                    isset($config['loop']) ? $config['loop'] : $factory->getParam('loop'),
+                    array_merge(
+                        [
+                            'id'    => isset($config['name']) ? $config['name'] : $factory->getParam('name'),
+                            'type'  => ZmqModel::BINDER,
                             'hosts' => isset($config['name']) ? $config['name'] : $factory->getParam('name')
                         ],
                         $config
